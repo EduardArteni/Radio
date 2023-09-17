@@ -1,3 +1,5 @@
+package src;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,10 +11,11 @@ public class Main {
 
     public static Image radioOff;
     public static Image radioOn;
-    public static int radioFrequency = 88;
-
+    public static int radioFrequency = 99;
+    public static boolean connected = false;
     public static boolean on = false;
     private static JFrame window;
+    public static GameClient client;
     private static GamePanel gamePanel = new GamePanel();
     private static GameEngine gameEngine = new GameEngine();
     private static Thread engineThread;
@@ -27,15 +30,14 @@ public class Main {
         GameServer server = new GameServer();
         server.start();
         String serverAddress = "localhost";
-        GameClient client = new GameClient(serverAddress);
+        client = new GameClient(serverAddress);
         client.start();
-        client.ping();
     }
 
     private static void initImages() {
         try {
-            radioOff = ImageIO.read(new File("C:\\Users\\elev\\IdeaProjects\\Radio\\res\\radio.png"));
-            radioOn = ImageIO.read(new File("C:\\Users\\elev\\IdeaProjects\\Radio\\res\\radio_on.png"));
+            radioOff = ImageIO.read(new File("res/radio.png"));
+            radioOn = ImageIO.read(new File("res/radio_on.png"));
         } catch (Exception e) {
 
         }
@@ -46,19 +48,58 @@ public class Main {
         window.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (MouseInfo.getPointerInfo().getLocation().x >= 827 && MouseInfo.getPointerInfo().getLocation().x <= 856) {
-                    if (MouseInfo.getPointerInfo().getLocation().y >= 469 && MouseInfo.getPointerInfo().getLocation().y <= 496) {
+                // din poza (radio) butonul e la coord (394 235) si se termina la 423 263
+                // poza se afla la Main.screenSize.width / 2 - 250, Main.screenSize.height / 2 - 150
+                // deci butonul se afla de la
+                // Main.screenSize.width / 2 - 250 + 394, Main.screenSize.height / 2 - 150 + 235
+                // la
+                // Main.screenSize.width / 2 - 250 + 423, Main.screenSize.height / 2 - 150 + 263
+                if (MouseInfo.getPointerInfo().getLocation().x >= Main.screenSize.width / 2 - 250 + 394 && MouseInfo.getPointerInfo().getLocation().x <= Main.screenSize.width / 2 - 250 + 423) {
+                    if (MouseInfo.getPointerInfo().getLocation().y >= Main.screenSize.height / 2 - 150 + 235 && MouseInfo.getPointerInfo().getLocation().y <= Main.screenSize.height / 2 - 150 + 263) {
+                        on = !on;
+                    }
+                }
+
+                // sagetile
+                // stanga (-)
+                // 125 234 - 152 265
+                // la fel ca la restul
+                if (MouseInfo.getPointerInfo().getLocation().x >= Main.screenSize.width / 2 - 250 + 125 && MouseInfo.getPointerInfo().getLocation().x <= Main.screenSize.width / 2 - 250 + 152) {
+                    if (MouseInfo.getPointerInfo().getLocation().y >= Main.screenSize.height / 2 - 150 + 234 && MouseInfo.getPointerInfo().getLocation().y <= Main.screenSize.height / 2 - 150 + 265) {
                         if (on) {
-                            on = false;
-                        } else {
-                            on = true;
+                            if (radioFrequency > 10) {
+                                radioFrequency--;
+                            }
                         }
                     }
                 }
 
-                if (MouseInfo.getPointerInfo().getLocation().x >= 800 && MouseInfo.getPointerInfo().getLocation().x <= 860) {
-                    if (MouseInfo.getPointerInfo().getLocation().y >= 320 && MouseInfo.getPointerInfo().getLocation().y <= 380) {
-                        System.out.println("clicked button");
+                // dreapta (+)
+                // 314 232 - 341 263
+                // la fel ca la restul
+                if (MouseInfo.getPointerInfo().getLocation().x >= Main.screenSize.width / 2 - 250 + 314 && MouseInfo.getPointerInfo().getLocation().x <= Main.screenSize.width / 2 - 250 + 341) {
+                    if (MouseInfo.getPointerInfo().getLocation().y >= Main.screenSize.height / 2 - 150 + 232 && MouseInfo.getPointerInfo().getLocation().y <= Main.screenSize.height / 2 - 150 + 263) {
+                        if (on) {
+                            if (radioFrequency < 99) {
+                                radioFrequency++;
+                            }
+                        }
+                    }
+                }
+
+
+                // de calculat si aici da nui asa important acum
+                // 366 84
+                // 428 142
+                if (MouseInfo.getPointerInfo().getLocation().x >= Main.screenSize.width / 2 - 250 + 366 && MouseInfo.getPointerInfo().getLocation().x <= Main.screenSize.width / 2 - 250 + 428) {
+                    if (MouseInfo.getPointerInfo().getLocation().y >= Main.screenSize.height / 2 - 150 + 84 && MouseInfo.getPointerInfo().getLocation().y <= Main.screenSize.height / 2 - 150 + 142) {
+                        if (on) {
+                            if (!connected) {
+                                client.connect();
+                            } else {
+                                System.out.println("sent data");
+                            }
+                        }
                     }
                 }
             }

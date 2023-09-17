@@ -1,4 +1,4 @@
-import java.awt.*;
+package src;
 
 public class GameEngine implements Runnable {
     @Override

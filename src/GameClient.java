@@ -1,3 +1,5 @@
+package src;
+
 import java.io.IOException;
 import java.net.*;
 
@@ -9,9 +11,7 @@ public class GameClient extends Thread {
         try {
             this.socket = new DatagramSocket();
             this.ipAddress = InetAddress.getByName(ipAddress);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -38,7 +38,16 @@ public class GameClient extends Thread {
         }
     }
 
-    public void ping(){
+    public void connect() {
+        byte[] data = ("01" + Main.radioFrequency).getBytes();
+        this.sendData(data);
+    }
+
+    public void disconnect() {
+
+    }
+
+    public void ping() {
         byte[] data = "PING".getBytes();
         this.sendData(data);
     }
