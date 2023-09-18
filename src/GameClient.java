@@ -50,6 +50,11 @@ public class GameClient extends Thread {
         }
     }
 
+    public void ping() {
+        byte[] data = ("00" + Main.radioFrequency).getBytes();
+        this.sendData(data);
+    }
+
     public void connect() {
         byte[] data = ("01" + Main.radioFrequency).getBytes();
         this.sendData(data);
@@ -58,11 +63,6 @@ public class GameClient extends Thread {
     public void disconnect() {
         Main.connected = false;
         byte[] data = ("02" + Main.radioFrequency).getBytes();
-        this.sendData(data);
-    }
-
-    public void ping() {
-        byte[] data = "PING".getBytes();
         this.sendData(data);
     }
 }

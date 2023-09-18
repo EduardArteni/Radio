@@ -15,6 +15,7 @@ public class Main {
     public static int radioFrequency = 99;
     public static boolean connected = false;
     public static boolean on = false;
+    public static int line[] = new int[50];
     private static JFrame window;
     public static GameClient client;
     private static GamePanel gamePanel = new GamePanel();
@@ -106,7 +107,8 @@ public class Main {
                             if (!connected) {
                                 client.connect();
                             } else {
-                                System.out.println("sent data");
+                                line[49] = 1;
+                                client.ping();
                             }
                         }
                     }

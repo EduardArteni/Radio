@@ -23,8 +23,8 @@ class Receiver {
     public String toString() {
         return "Receiver{" +
                 "frequency=" + frequency +
-                ", ipAddress=" + ipAddress +
-                ", port=" + port +
+                ", ipAddres=" + ipAddress +
+                ", prt=" + port +
                 '}';
     }
 
@@ -67,6 +67,12 @@ public class GameServer extends Thread {
         String message = new String(data).trim();
         int packetType = Integer.parseInt(message.substring(0, 2));
         switch (packetType) {
+            case 00:
+                int frq = Integer.parseInt(message.substring(2, 4));
+                System.out.println("PING FROM [" + address.getHostAddress() + ":" + port + "] ON FREQUENCY " + frq);
+                byte[] broadcast = ("00").getBytes();
+                sendDataToAllClients(broadcast, frq);
+                break;
             case 01:
                 int frequency = Integer.parseInt(message.substring(2, 4));
                 System.out.println("CONNECT REQUEST FROM [" + address.getHostAddress() + ":" + port + "] ON FREQUENCY " + frequency);

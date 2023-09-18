@@ -38,7 +38,28 @@ public class GamePanel extends JPanel implements Runnable {
                 g2.setColor(Color.green);
                 g2.setFont(new Font("TimesRoman", Font.PLAIN, 30));
                 if (Main.connected) {
+                    //draw radio
                     g2.drawImage((BufferedImage) Main.radioConnected, null, Main.screenSize.width / 2 - 250, Main.screenSize.height / 2 - 150);
+
+                    //green line
+                    //48 118 299 118;
+                    // line length = 299 - 48
+                    // screen height 55 - 179 == 124/2 = 62
+                    // +54 from top to screen
+                    // 62 + 54 = 116
+
+                    //length = 251
+                    // we divide in 50 parts of 3, the lasts one always empty
+                    // if line[i] > 0 we draw 2 lines
+
+                    for (int i = 0; i < 50; i++) {
+                        if (Main.line[i] != 0) {
+
+                        } else {
+                            g2.drawLine(Main.screenSize.width / 2 - 250 + 48 + 50 + (i * 3), Main.screenSize.height / 2 - 150 + 116, Main.screenSize.width / 2 - 250 + 50 + ((i + 1) * 3), Main.screenSize.height / 2 - 150 + 116);
+                            g2.drawLine(Main.screenSize.width / 2 - 250 + 48 + 50 + (i * 3), Main.screenSize.height / 2 - 150 + 117, Main.screenSize.width / 2 - 250 + 50 + ((i + 1) * 3), Main.screenSize.height / 2 - 150 + 117);
+                        }
+                    }
                 } else {
                     g2.drawImage((BufferedImage) Main.radioOn, null, Main.screenSize.width / 2 - 250, Main.screenSize.height / 2 - 150);
                 }
