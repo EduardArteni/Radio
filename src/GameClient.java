@@ -25,7 +25,19 @@ public class GameClient extends Thread {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("FROM [" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + "]> " + new String(packet.getData()).trim());
+            String message = new String(data).trim();
+            int packetType = Integer.parseInt(message.substring(0, 2));
+            switch (packetType) {
+                case 01:
+                    int frequency = Integer.parseInt(message.substring(2, 4));
+                    System.out.println("CONNECTED ON FREQUENCY " + frequency);
+                    Main.connected = true;
+                    Main.radioFrequency = frequency;
+                    break;
+                default:
+                    System.out.println("FROM [" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + "]> " + new String(packet.getData()).trim());
+                    break;
+            }
         }
     }
 
@@ -44,7 +56,9 @@ public class GameClient extends Thread {
     }
 
     public void disconnect() {
-
+        Main.connected = false;
+        byte[] data = ("02" + Main.radioFrequency).getBytes();
+        this.sendData(data);
     }
 
     public void ping() {

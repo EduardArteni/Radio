@@ -37,8 +37,11 @@ public class GamePanel extends JPanel implements Runnable {
             if (Main.on) {
                 g2.setColor(Color.green);
                 g2.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-                g2.drawImage((BufferedImage) Main.radioOn, null, Main.screenSize.width / 2 - 250, Main.screenSize.height / 2 - 150);
-
+                if (Main.connected) {
+                    g2.drawImage((BufferedImage) Main.radioConnected, null, Main.screenSize.width / 2 - 250, Main.screenSize.height / 2 - 150);
+                } else {
+                    g2.drawImage((BufferedImage) Main.radioOn, null, Main.screenSize.width / 2 - 250, Main.screenSize.height / 2 - 150);
+                }
                 // where do I draw frequency?
                 // on image with radio frequency monitor is from 169 229 to 295 269 (126x40 pixels)
                 // radio image is at Main.screenSize.width / 2 - 250, Main.screenSize.height / 2 - 150

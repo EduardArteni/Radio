@@ -11,6 +11,7 @@ public class Main {
 
     public static Image radioOff;
     public static Image radioOn;
+    public static Image radioConnected;
     public static int radioFrequency = 99;
     public static boolean connected = false;
     public static boolean on = false;
@@ -38,6 +39,7 @@ public class Main {
         try {
             radioOff = ImageIO.read(new File("res/radio.png"));
             radioOn = ImageIO.read(new File("res/radio_on.png"));
+            radioConnected = ImageIO.read(new File("res/radio_on_connected.png"));
         } catch (Exception e) {
 
         }
@@ -56,6 +58,9 @@ public class Main {
                 // Main.screenSize.width / 2 - 250 + 423, Main.screenSize.height / 2 - 150 + 263
                 if (MouseInfo.getPointerInfo().getLocation().x >= Main.screenSize.width / 2 - 250 + 394 && MouseInfo.getPointerInfo().getLocation().x <= Main.screenSize.width / 2 - 250 + 423) {
                     if (MouseInfo.getPointerInfo().getLocation().y >= Main.screenSize.height / 2 - 150 + 235 && MouseInfo.getPointerInfo().getLocation().y <= Main.screenSize.height / 2 - 150 + 263) {
+                        if (on)
+                            if (connected)
+                                client.disconnect();
                         on = !on;
                     }
                 }
@@ -68,6 +73,8 @@ public class Main {
                     if (MouseInfo.getPointerInfo().getLocation().y >= Main.screenSize.height / 2 - 150 + 234 && MouseInfo.getPointerInfo().getLocation().y <= Main.screenSize.height / 2 - 150 + 265) {
                         if (on) {
                             if (radioFrequency > 10) {
+                                if (connected)
+                                    client.disconnect();
                                 radioFrequency--;
                             }
                         }
@@ -81,6 +88,8 @@ public class Main {
                     if (MouseInfo.getPointerInfo().getLocation().y >= Main.screenSize.height / 2 - 150 + 232 && MouseInfo.getPointerInfo().getLocation().y <= Main.screenSize.height / 2 - 150 + 263) {
                         if (on) {
                             if (radioFrequency < 99) {
+                                if (connected)
+                                    client.disconnect();
                                 radioFrequency++;
                             }
                         }
