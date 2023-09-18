@@ -49,15 +49,21 @@ public class GamePanel extends JPanel implements Runnable {
                     // 62 + 54 = 116
 
                     //length = 251
-                    // we divide in 50 parts of 3, the lasts one always empty
-                    // if line[i] > 0 we draw 2 lines
-
+                    // we divide in 50 parts of 5, the last pixel is always empty
+                    // if line[i] > 0 we draw 2 lines as in // \\
+                    // x start = Main.screenSize.width / 2 - 250 + 48
+                    int xStart = Main.screenSize.width / 2 - 250 + 48;
+                    g2.drawLine(xStart + 250, Main.screenSize.height / 2 - 150 + 116, xStart + 251, Main.screenSize.height / 2 - 150 + 117);
                     for (int i = 0; i < 50; i++) {
                         if (Main.line[i] != 0) {
+                            g2.drawLine(xStart + (i * 5), Main.screenSize.height / 2 - 150 + 116, xStart + (i * 5) + 2, Main.screenSize.height / 2 - 150 + 117 - (10 * Main.line[i]));
+                            g2.drawLine(xStart + (i * 5) + 1, Main.screenSize.height / 2 - 150 + 117, xStart + (i * 5) + 2, Main.screenSize.height / 2 - 150 + 116 - (10 * Main.line[i]));
 
+                            g2.drawLine(xStart + (i * 5) + 3, Main.screenSize.height / 2 - 150 + 117, xStart + (i * 5) + 2, Main.screenSize.height / 2 - 150 + 116 - (10 * Main.line[i]));
+                            g2.drawLine(xStart + (i * 5) + 4, Main.screenSize.height / 2 - 150 + 116, xStart + (i * 5) + 2, Main.screenSize.height / 2 - 150 + 117 - (10 * Main.line[i]));
                         } else {
-                            g2.drawLine(Main.screenSize.width / 2 - 250 + 48 + 50 + (i * 3), Main.screenSize.height / 2 - 150 + 116, Main.screenSize.width / 2 - 250 + 50 + ((i + 1) * 3), Main.screenSize.height / 2 - 150 + 116);
-                            g2.drawLine(Main.screenSize.width / 2 - 250 + 48 + 50 + (i * 3), Main.screenSize.height / 2 - 150 + 117, Main.screenSize.width / 2 - 250 + 50 + ((i + 1) * 3), Main.screenSize.height / 2 - 150 + 117);
+                            g2.drawLine(xStart + (i * 5), Main.screenSize.height / 2 - 150 + 116, xStart + (i * 5) + 4, Main.screenSize.height / 2 - 150 + 117);
+//                            g2.drawLine(xStart + (i * 5), Main.screenSize.height / 2 - 150 + 117, xStart + (i * 5) + 4, Main.screenSize.height / 2 - 150 + 117);
                         }
                     }
                 } else {

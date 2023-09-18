@@ -62,6 +62,7 @@ public class GameClient extends Thread {
 
     public void disconnect() {
         Main.connected = false;
+        Main.line = new int[50];
         byte[] data = ("02" + Main.radioFrequency).getBytes();
         this.sendData(data);
     }

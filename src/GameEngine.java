@@ -3,7 +3,7 @@ package src;
 public class GameEngine implements Runnable {
     @Override
     public void run() {
-        double drawInterval = 1000000000 / 10;
+        double drawInterval = 1000000000 / 30;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -32,6 +32,7 @@ public class GameEngine implements Runnable {
             for (int i = 0; i < 49; i++) {
                 Main.line[i] = Main.line[i + 1];
             }
+            Main.line[49] = 0;
         } catch (Exception e) {
             System.out.println("Tried updating we failed");
             e.printStackTrace();

@@ -98,7 +98,6 @@ public class Main {
                 }
 
 
-                // de calculat si aici da nui asa important acum
                 // 366 84
                 // 428 142
                 if (MouseInfo.getPointerInfo().getLocation().x >= Main.screenSize.width / 2 - 250 + 366 && MouseInfo.getPointerInfo().getLocation().x <= Main.screenSize.width / 2 - 250 + 428) {
@@ -107,7 +106,7 @@ public class Main {
                             if (!connected) {
                                 client.connect();
                             } else {
-                                line[49] = 1;
+                                line[49] = 3;
                                 client.ping();
                             }
                         }
